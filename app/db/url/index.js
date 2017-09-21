@@ -1,5 +1,7 @@
-import  config  from '../config/index';
+import  config  from '../../config';
 
-const url = `postgresql:${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`;
+const {username, password, host, port, database } = config.postgres;
+
+const url = `postgresql:${username}:${password}@${host}:${port}/${database}`;
 
 export default url;

@@ -1,0 +1,1 @@
+export { default as insertQuery} from './insert';

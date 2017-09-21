@@ -1,11 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { UnauthorizedError } from 'express-jwt';
+
+import { createToken } from './jwtService';
 
 import * as userRepository from '../repositories/userRepository';
 
 import { hashPassword, checkPassword } from '../utils';
-
-import config from '../config';
 
 export const saveUser = async (user) => {
     const {password} = user;
@@ -45,13 +44,7 @@ export const login = async (email, password) => {
           id: user.id,
           email: user.email
         };
-
-        const {secret , algorithm, expiresIn } = config.jwt;
-
-        return jwt.sign(payload, secret, {
-            algorithm,
-            expiresIn
-        });
+        return createToken(payload);
 
     } catch (e) {
         throw e;

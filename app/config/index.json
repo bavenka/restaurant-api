@@ -1,14 +1,16 @@
 {
   "postgres": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "root",
     "host": "localhost",
     "port": "5432",
     "database": "db"
   },
   "jwt": {
     "secret": "secret",
-    "algorithm": "HS512",
-    "expiresIn": "24h"
+    "options": {
+      "algorithm": "HS512",
+      "expiresIn": "24h"
+    }
   }
 }

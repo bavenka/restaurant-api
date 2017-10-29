@@ -11,10 +11,13 @@ export const saveUser = async (user) => {
 
     try {
         user.password = await hashPassword(password);
+        const data = await userRepository.saveUser(user);
+        const existingUser = await data.rows[0];
+
+        return createToken(existingUser);
     } catch (e) {
         throw e;
     }
-    return userRepository.saveUser(user);
 };
 
 export const getUserByEmail = (email) => {
@@ -24,7 +27,7 @@ export const getUserByEmail = (email) => {
     return userRepository.getUserByEmail(user);
 };
 
-export const login = async (email, password) => {
+export const authenticate = async (email, password) => {
     try {
         const data = await getUserByEmail(email);
         const user = await data.rows[0];
@@ -40,11 +43,7 @@ export const login = async (email, password) => {
             throw new UnauthorizedError(401, new Error('Invalid credentials'));
         }
 
-        const payload = {
-          id: user.id,
-          email: user.email
-        };
-        return createToken(payload);
+        return createToken(user);
 
     } catch (e) {
         throw e;

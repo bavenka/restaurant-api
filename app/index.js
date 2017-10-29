@@ -6,7 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
+
 import users from './routes/userRoute';
+import categories from './routes/categoryRoute';
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', users);
+app.use('/categories', categories);
 
 // error handler
 app.use((err, req, res, next) => {

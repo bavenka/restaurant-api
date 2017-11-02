@@ -1,10 +1,7 @@
 import express from 'express';
 import validate from 'express-validation';
-import jwt from 'express-jwt';
 
-import config from '../config';
-
-import categoryValidator from '../validators/categoryValidator';
+import * as categoryValidator from '../validators/categoryValidator';
 
 import * as categoryController from '../controllers/categoryController';
 
@@ -16,6 +13,8 @@ const router = express.Router();
     getToken: req => req.header('Authorization'),
 }));*/
 
-router.post('/create', validate(categoryValidator), categoryController.createCategory);
+router.post('/create', validate(categoryValidator.categoryCreating), categoryController.createCategory);
+
+router.delete('/delete', validate(categoryValidator.categoryDeleting), categoryController.deleteCategory);
 
 export default router;

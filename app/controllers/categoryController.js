@@ -10,7 +10,7 @@ export const createCategory = (req, res, next) => {
 export const deleteCategory = (req, res, next) => {
     categoryService
         .deleteCategory(req.body)
-        .then(data => res.status(201))
+        .then(data => res.status(200).end())
         .catch(e => next(e))
 };
 

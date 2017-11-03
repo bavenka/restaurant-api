@@ -1,10 +1,9 @@
-import { UnauthorizedError } from 'express-jwt';
-
 import { createToken } from './jwtService';
 
 import * as userRepository from '../repositories/userRepository';
 
 import { hashPassword, checkPassword } from '../utils';
+import CustomError from "../errors/custom-error";
 
 export const saveUser = async (user) => {
     const {password} = user;
@@ -20,12 +19,7 @@ export const saveUser = async (user) => {
     }
 };
 
-export const getUserByEmail = (email) => {
-    const user = {
-        email,
-    };
-    return userRepository.getUserByEmail(user);
-};
+export const getUserByEmail = (email) => userRepository.getUserByEmail(email);
 
 export const authenticate = async (email, password) => {
     try {
@@ -33,14 +27,14 @@ export const authenticate = async (email, password) => {
         const user = await data.rows[0];
 
         if (!user) {
-            throw new UnauthorizedError(401, new Error('Invalid credentials'));
+            throw new CustomError('Invalid credentials', 401);
         }
 
         const { password: hashedPassword }  =  user;
 
         const isValid = await checkPassword(password, hashedPassword);
         if (!isValid) {
-            throw new UnauthorizedError(401, new Error('Invalid credentials'));
+            throw new CustomError('Invalid credentials', 401);
         }
 
         return createToken(user);

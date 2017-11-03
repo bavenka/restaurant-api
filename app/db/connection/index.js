@@ -1,6 +1,7 @@
-import url from '../url/index';
+import { Pool } from 'pg';
 
-const { Pool } = require('pg');
+import url from '../url';
+
 const pool = new Pool({
     connectionString: url
 });

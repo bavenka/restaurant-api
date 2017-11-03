@@ -9,6 +9,7 @@ var sassMiddleware = require('node-sass-middleware');
 
 import users from './routes/userRoute';
 import categories from './routes/categoryRoute';
+import CustomError from "./errors/custom-error";
 
 const app = express();
 
@@ -31,12 +32,13 @@ app.use('/categories', categories);
 
 // error handler
 app.use((err, req, res, next) => {
-    if (err.name === 'error' && err.detail) {
-        res.status(409).json({error: err.detail});
-    } else if (err.status) {
+    if (err instanceof CustomError) {
         res.status(err.status).json({error: err.message});
-    }
-    else {
+    } else if (err.detail && !err.status) {
+        res.status(409).json({error: err.detail});
+    } else if(!err.detail && err.status) {
+        res.status(err.status).json({error: err.message});
+    } else {
         res.status(500).json({error: err.message});
     }
 });

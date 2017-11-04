@@ -1,10 +1,13 @@
-import pool  from '../db/connection';
+import pool from '../db/connection';
 
-import { insertQuery, selectQuery } from './generic';
+import {insertQuery, selectQuery} from './generic';
 
-import { QUERY_NAME, TABLE_NAME } from '../db/constants';
+import {QUERY_NAME, TABLE_NAME} from '../db/constants';
 
 export const saveUser = (user) => pool.query(insertQuery(user, TABLE_NAME.USERS, QUERY_NAME.SAVE_USER));
 
 export const getUserByEmail = (email) =>
-    pool.query(selectQuery(email, TABLE_NAME.USERS, QUERY_NAME.GET_USER_BY_EMAIL));
+    pool.query(selectQuery({email}, TABLE_NAME.USERS, QUERY_NAME.GET_USER_BY_EMAIL));
+
+export const getUserByGoogleId = (googleId) =>
+    pool.query(selectQuery({"google_id": googleId}, TABLE_NAME.USERS, QUERY_NAME.GET_USER_BY_GOOGLE_ID));

@@ -21,6 +21,8 @@ export const saveUser = async (user) => {
 
 export const getUserByEmail = (email) => userRepository.getUserByEmail(email);
 
+export const getUserByGoogleId = (googleId) => userRepository.getUserByGoogleId(googleId);
+
 export const authenticate = async (email, password) => {
     try {
         const data = await getUserByEmail(email);

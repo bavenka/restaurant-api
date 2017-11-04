@@ -8,7 +8,7 @@ export const createCategory = (category) => pool
     .query(insertQuery(category, TABLE_NAME.CATEGORIES, QUERY_NAME.CREATE_CATEGORY));
 
 export const deleteCategory = (id) => pool
-    .query(deleteQuery(id, TABLE_NAME.CATEGORIES, QUERY_NAME.CREATE_CATEGORY));
+    .query(deleteQuery({id}, TABLE_NAME.CATEGORIES, QUERY_NAME.CREATE_CATEGORY));
 
 export const getCategory = (id) => pool
-    .query(selectQuery(id, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORY));
+    .query(selectQuery({id}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORY));

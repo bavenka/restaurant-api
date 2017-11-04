@@ -1,10 +1,11 @@
 export default (param, tableName, queryName) => {
 
-    const queryText = `DELETE FROM ${ tableName } WHERE ${param} = $1`;
+    const key = Object.keys(param)[0];
+    const queryText = `DELETE FROM ${ tableName } WHERE ${key} = $1`;
 
     return {
         name: queryName,
         text: queryText,
-        values: [param]
+        values: param[key].split(" "),
     };
 };

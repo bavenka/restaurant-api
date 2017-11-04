@@ -12,5 +12,9 @@
       "algorithm": "HS512",
       "expiresIn": "24h"
     }
+  },
+  "google": {
+    "clientId": "714187634266-lc6abssit7uj0v7quqjp651u086f041n.apps.googleusercontent.com",
+    "clientSecret": "9PcIIUTlAPP-6VEjYghfPeZv"
   }
 }

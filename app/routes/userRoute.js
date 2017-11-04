@@ -1,8 +1,8 @@
 import express from 'express';
 import validate from 'express-validation';
-import jwt from 'express-jwt';
+import passport from 'passport';
 
-import config from '../config';
+import  '../utils/passport';
 
 import userValidator from '../validators/userValidator';
 import loginValidator from '../validators/loginValidator';
@@ -14,6 +14,14 @@ const router = express.Router();
 
 router.post('/signup', validate(userValidator), userController.saveUser);
 
-router.post('/login',  validate(loginValidator), userController.authenticate);
+router.post('/signin',  validate(loginValidator), userController.authenticate);
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/signin' }),
+    function(req, res) {
+        res.redirect('/');
+    });
 
 export default router;

@@ -5,7 +5,7 @@ import * as userRepository from '../repositories/userRepository';
 import { hashPassword, checkPassword } from '../utils';
 import CustomError from "../errors/custom-error";
 
-export const saveUser = async (user) => {
+export const registerUser = async (user) => {
     const {password} = user;
 
     try {
@@ -18,6 +18,8 @@ export const saveUser = async (user) => {
         throw e;
     }
 };
+
+export const saveUser = (user) => userRepository.saveUser(user);
 
 export const getUserByEmail = (email) => userRepository.getUserByEmail(email);
 

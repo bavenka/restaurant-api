@@ -1,15 +1,22 @@
 import * as userService from '../services/userService';
+import * as jwtService from '../services/jwtService';
 
-export const saveUser = (req, res, next) => {
+export const registerUser = (req, res, next) => {
     userService
-        .saveUser(req.body)
-        .then(data => res.status(201).json({"token" : data}))
+        .registerUser(req.body)
+        .then(data => res.status(201).json({"token": data}))
         .catch(e => next(e))
 };
 
 export const authenticate = (req, res, next) => {
-  userService
-      .authenticate(req.body.email, req.body.password)
-      .then(data => res.status(200).json({"token" : data}))
-      .catch(e => next(e))
+    userService
+        .authenticate(req.body.email, req.body.password)
+        .then(data => res.status(200).json({"token": data}))
+        .catch(e => next(e))
+};
+
+export const authenticateByGoogle = (req, res) => {
+    const { user } = req;
+    const token = jwtService.createToken(user);
+    res.status(200).json({token});
 };

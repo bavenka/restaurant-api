@@ -11,17 +11,17 @@ import loginValidator from '../validators/loginValidator';
 import * as userController from '../controllers/userControlller';
 
 const router = express.Router();
+const passportGoogle = passport.authenticate('google', { session: false, scope: ['email profile'] });
 
-router.post('/signup', validate(userValidator), userController.saveUser);
+router.post('/signup', validate(userValidator), userController.registerUser);
 
 router.post('/signin',  validate(loginValidator), userController.authenticate);
 
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/auth/google', passportGoogle);
 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/signin' }),
-    function(req, res) {
-        res.redirect('/');
-    });
+    userController.authenticateByGoogle
+  );
 
 export default router;

@@ -7,7 +7,6 @@ export const createToken = (user) => {
 
     return jwt.sign({
         id: user.id,
-        email: user.email,
     }, secret, options);
 };
 

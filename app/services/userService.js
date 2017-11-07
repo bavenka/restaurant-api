@@ -75,7 +75,7 @@ export const authenticateByGoogle = async (accessToken, refreshToken, profile, d
 
         return done(null, existingUser);
     } catch (error) {
-        return done(error, null)
+        return done(error, null);
     }
 };
 
@@ -102,7 +102,7 @@ export const authenticateByFacebook = async (accessToken, refreshToken, profile,
 
         return done(null, existingUser);
     } catch (error) {
-        return done(error, null)
+        return done(error, null);
     }
 };
 
@@ -128,9 +128,9 @@ export const authenticateByVkontakte = async (accessToken, refreshToken, params,
         const existingData = await saveUser(newUser);
         const existingUser = await existingData.rows[0];
 
-        return done(existingUser, null);
+        return done(null, existingUser);
     } catch (error) {
-        return done(error, null)
+        return done(error, null);
     }
 };
 

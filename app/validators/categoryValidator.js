@@ -8,7 +8,7 @@ export const categoryCreating = {
 };
 
 export const categoryDeleting = {
-    body: {
-        id: Joi.number().integer().min(1),
+    params: {
+        id: Joi.number().integer().min(1).required(),
     },
 };

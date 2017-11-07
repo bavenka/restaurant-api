@@ -5,7 +5,7 @@ export const createCategory = (category) => categoryRepository.createCategory(ca
 
 export const getCategory = (id) => categoryRepository.getCategory(id);
 
-export const deleteCategory = async ({id}) => {
+export const deleteCategory = async (id) => {
     try {
         const data = await getCategory(id);
         const category = await data.rows[0];

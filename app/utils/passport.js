@@ -1,40 +1,29 @@
 import passport from 'passport';
-import config from '../config';
+import {google, facebook, vkontakte} from '../config';
 
 import * as userService from '../services/userService';
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const VKontakteStrategy = require('passport-vkontakte').Strategy;
 
 passport.use(new GoogleStrategy({
-    clientID: config.google.clientId,
-    clientSecret: config.google.clientSecret,
+    clientID: google.clientId,
+    clientSecret: google.clientSecret,
     callbackURL: "http://localhost:3000/auth/google/callback"
-}, async (accessToken, refreshToken, profile, done) => {
-    try {
-        const {id: googleId, name: {familyName, givenName}, emails} = profile;
+}, userService.authenticateByGoogle));
 
-        const data = await userService.getUserByGoogleId(googleId);
-        const user = await data.rows[0];
+passport.use(new FacebookStrategy({
+    clientID: facebook.clientId,
+    clientSecret: facebook.clientSecret,
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
+}, userService.authenticateByFacebook));
 
-        if (user) {
-            return done(null, user);
-        }
-
-        const newUser = {
-            "google_id": googleId,
-            "google_email": emails[0].value,
-            "name": givenName,
-            "last_name": familyName,
-        };
-
-        const existingData = await userService.saveUser(newUser);
-        const existingUser = await existingData.rows[0];
-
-        return done(null, existingUser);
-    } catch (error) {
-        return done(error, null)
-    }
-}));
+passport.use(new VKontakteStrategy({
+    clientID: vkontakte.clientId,
+    clientSecret: vkontakte.clientSecret,
+    callbackURL: "http://localhost:3000/auth/vkontakte/callback",
+}, userService.authenticateByVkontakte));
 
 passport.serializeUser((user, done) => {
     done(null, user);

@@ -16,5 +16,13 @@
   "google": {
     "clientId": "714187634266-lc6abssit7uj0v7quqjp651u086f041n.apps.googleusercontent.com",
     "clientSecret": "9PcIIUTlAPP-6VEjYghfPeZv"
+  },
+  "vkontakte": {
+    "clientId": "6249324",
+    "clientSecret":"1ELAjIWbB9TzfLFm8OA2"
+  },
+  "facebook": {
+    "clientId": "141126546612778",
+    "clientSecret": "2275bb676906cbb31dcc168042ae1184"
   }
 }

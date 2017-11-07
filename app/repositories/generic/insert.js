@@ -1,17 +1,17 @@
-export default (body, tableName, queryName) => {
+export default (body, tableName) => {
 
     let queryArguments = [];
+    let queryKeys = [];
 
     const queryValues = Object.keys(body).map((key, index) => {
+        queryKeys.push(`"${key}"`);
         queryArguments.push(`$${index + 1}`);
-        return body[key];
+        return `${body[key]}`;
     });
-    const queryKeys = Object.keys(body);
 
-    const queryText = `INSERT INTO ${tableName}(${queryKeys.toString()}) VALUES(${queryArguments.toString()}) RETURNING *`;
+    const queryText = `INSERT INTO "${tableName}" (${queryKeys.toString()}) VALUES(${queryArguments.toString()}) RETURNING *`;
 
     return {
-        name: queryName,
         text: queryText,
         values: queryValues,
     };

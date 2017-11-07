@@ -16,7 +16,17 @@ export const authenticate = (req, res, next) => {
 };
 
 export const authenticateByGoogle = (req, res) => {
-    const { user } = req;
-    const token = jwtService.createToken(user);
-    res.status(200).json({token});
+        const token = jwtService.createToken(req.user);
+        res.status(200).json({token});
 };
+
+export const authenticateByFacebook = (req, res) => {
+        const token = jwtService.createToken(req.user);
+        res.status(200).json({token});
+};
+
+export const authenticateByVkontakte = (req, res) => {
+        const token = jwtService.createToken(req.user);
+        res.status(200).json({token});
+};
+

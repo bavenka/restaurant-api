@@ -5,6 +5,20 @@ export const createCategory = (category) => categoryRepository.createCategory(ca
 
 export const getCategory = (id) => categoryRepository.getCategory(id);
 
+export const updateCategory = async (category, id) => {
+    try {
+        const data = await getCategory(id);
+        const category = await data.rows[0];
+        if (!category) {
+            throw new CustomError(`Category with id = ${id} not found`, 204);
+        }
+        return categoryRepository.updateCategory(category, id);
+    }catch (e) {
+        throw e;
+    }
+
+};
+
 export const deleteCategory = async (id) => {
     try {
         const data = await getCategory(id);

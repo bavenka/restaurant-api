@@ -7,6 +7,15 @@ export const categoryCreating = {
     },
 };
 
+export const categoryUpdating = {
+    params: {
+        id: Joi.number().integer().min(1).required(),
+    },
+    body: {
+        name: Joi.string().required(),
+    },
+};
+
 export const categoryDeleting = {
     params: {
         id: Joi.number().integer().min(1).required(),

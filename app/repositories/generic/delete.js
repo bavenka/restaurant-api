@@ -1,10 +1,8 @@
-export default (param, tableName) => {
+export default (id, tableName) => {
 
-    const key = Object.keys(param)[0];
-    const queryText = `DELETE FROM "${ tableName }" WHERE "${key}" = $1`;
+    const queryText = `DELETE FROM "${ tableName }" WHERE "id" = ${id}`;
 
     return {
         text: queryText,
-        values: [param[key]],
     };
 };

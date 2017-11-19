@@ -1,11 +1,9 @@
-export default (param, tableName, queryName) => {
+export default (id, tableName, queryName) => {
 
-    const key = Object.keys(param)[0];
-    const queryText = `SELECT * FROM "${ tableName }" WHERE "${key}" = $1`;
+    const queryText = `SELECT * FROM "${ tableName }" WHERE "id" = ${id}`;
 
     return {
         name: queryName,
         text: queryText,
-        values: [param[key]],
     };
 };

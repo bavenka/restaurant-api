@@ -7,6 +7,13 @@ export const createCategory = (req, res, next) => {
         .catch(e => next(e))
 };
 
+export const updateCategory = (req, res, next) => {
+    categoryService
+        .updateCategory(req.body, req.params.id)
+        .then(data => res.status(200).json(data.rows[0]))
+        .catch(e => next(e))
+};
+
 export const deleteCategory = (req, res, next) => {
     categoryService
         .deleteCategory(req.params.id)

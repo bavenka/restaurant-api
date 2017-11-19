@@ -15,6 +15,8 @@ const router = express.Router();
 
 router.post('/create', validate(categoryValidator.categoryCreating), categoryController.createCategory);
 
+router.put('/:id/update', validate(categoryValidator.categoryUpdating), categoryController.updateCategory);
+
 router.delete('/:id/delete', validate(categoryValidator.categoryDeleting), categoryController.deleteCategory);
 
 export default router;

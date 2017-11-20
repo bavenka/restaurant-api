@@ -3,21 +3,39 @@ import pool from '../db/connection';
 import * as categoryRepository from '../repositories/categoryRepository';
 import CustomError from "../errors/custom-error";
 
-export const createCategory = (category) => categoryRepository.createCategory(category);
+export const createCategory = async (category) => {
+    const client = await pool.connect();
+    try {
+        return await categoryRepository.createCategory(category, client);
+    } catch (e) {
+        throw e;
+    } finally {
+        client.release();
+    }
+};
 
-export const getCategory = (id) => categoryRepository.getCategory(id);
+export const getCategory = async (id) => {
+    const client = await pool.connect();
+    try {
+        return await categoryRepository.getCategory(id, client);
+    } catch (e) {
+        throw e;
+    } finally {
+        client.release();
+    }
+};
 
 export const updateCategory = async (category, id) => {
     const client = pool.connect();
     try {
         await client.query('BEGIN');
 
-        const data = await getCategory(id);
+        const data = await categoryRepository.getCategory(id, client);
         const category = await data.rows[0];
         if (!category) {
             throw new CustomError(`Category with id = ${id} not found`, 204);
         }
-        const updatedCategory = await categoryRepository.updateCategory(category, id);
+        const updatedCategory = await categoryRepository.updateCategory(category, id, client);
 
         await client.query('COMMIT');
 
@@ -31,16 +49,16 @@ export const updateCategory = async (category, id) => {
 };
 
 export const deleteCategory = async (id) => {
-    const client = pool.connect();
+    const client = await pool.connect();
     try {
         await client.query('BEGIN');
 
-        const data = await getCategory(id);
+        const data = await categoryRepository.getCategory(id, client);
         const category = await data.rows[0];
         if (!category) {
             throw new CustomError(`Category with id = ${id} not found`, 204);
         }
-        await categoryRepository.deleteCategory(id);
+        await categoryRepository.deleteCategory(id, client);
 
         await client.query('COMMIT');
     }

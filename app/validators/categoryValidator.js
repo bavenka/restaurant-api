@@ -12,6 +12,7 @@ export const categoryUpdating = {
         id: Joi.number().integer().min(1).required(),
     },
     body: {
+        id: Joi.number().integer().min(1).required(),
         name: Joi.string().required(),
     },
 };

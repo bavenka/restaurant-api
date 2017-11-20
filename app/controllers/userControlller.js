@@ -20,13 +20,3 @@ export const authenticateByGoogle = (req, res) => {
         res.status(200).json({token});
 };
 
-export const authenticateByFacebook = (req, res) => {
-        const token = jwtService.createToken(req.user);
-        res.status(200).json({token});
-};
-
-export const authenticateByVkontakte = (req, res) => {
-        const token = jwtService.createToken(req.user);
-        res.status(200).json({token});
-};
-

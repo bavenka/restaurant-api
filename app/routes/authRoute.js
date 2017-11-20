@@ -22,18 +22,4 @@ router.get('/auth/google/callback',
     userController.authenticateByGoogle
 );
 
-router.get('/auth/facebook', passportFacebook);
-
-router.get('/auth/facebook/callback',
-    passport.authenticate('facebook'),
-    userController.authenticateByFacebook
-);
-
-router.get('/auth/vkontakte', passportVkontakte);
-
-router.get('/auth/vkontakte/callback',
-    passport.authenticate('vkontakte'),
-    userController.authenticateByVkontakte
-);
-
 export default router;

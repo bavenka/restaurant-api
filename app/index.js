@@ -10,6 +10,7 @@ var sassMiddleware = require('node-sass-middleware');
 
 import users from './routes/userRoute';
 import categories from './routes/categoryRoute';
+import dishes from './routes/dishRoute';
 import auth from './routes/authRoute';
 import CustomError from "./errors/custom-error";
 
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', users, auth);
 app.use('/categories', categories);
+app.use('/dishes', dishes);
 
 // error handler
 app.use((err, req, res, next) => {

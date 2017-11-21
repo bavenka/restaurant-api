@@ -1,44 +1,42 @@
-import { createToken } from './jwtService';
+import pool from '../db/connection';
+
+import {createToken} from './jwtService';
 
 import * as userRepository from '../repositories/userRepository';
 
-import { hashPassword, checkPassword } from '../utils';
+import {hashPassword, checkPassword} from '../utils';
 import CustomError from "../errors/custom-error";
 
 export const registerUser = async (user) => {
+    const client = await pool.connect();
+
     const {password} = user;
 
     try {
         user.password = await hashPassword(password);
-        const data = await userRepository.saveUser(user);
+
+        const data = await userRepository.saveUser(user, client);
         const existingUser = await data.rows[0];
 
         return createToken(existingUser);
     } catch (e) {
         throw e;
+    } finally {
+        client.release();
     }
 };
 
-export const saveUser = (user) => userRepository.saveUser(user);
-
-export const getUserByEmail = (email) => userRepository.getUserByEmail(email);
-
-export const getUserByGoogleId = (googleId) => userRepository.getUserByGoogleId(googleId);
-
-export const getUserByFacebookId = (facebookId) => userRepository.getUserByFacebookId(facebookId);
-
-export const getUserByVkontakteId = (vkontakteId) => userRepository.getUserByVkontakteId(vkontakteId);
-
 export const authenticate = async (email, password) => {
+    const client = await pool.connect();
     try {
-        const data = await getUserByEmail(email);
+        const data = await userRepository.getUserByEmail(email, client);
         const user = await data.rows[0];
 
         if (!user) {
             throw new CustomError('Invalid credentials', 401);
         }
 
-        const { password: hashedPassword }  =  user;
+        const {password: hashedPassword} = user;
 
         const isValid = await checkPassword(password, hashedPassword);
         if (!isValid) {
@@ -49,17 +47,24 @@ export const authenticate = async (email, password) => {
 
     } catch (e) {
         throw e;
+    } finally {
+        client.release();
     }
 };
 
 export const authenticateByGoogle = async (accessToken, refreshToken, profile, done) => {
+    const client = await pool.connect();
     try {
+        await client.query('BEGIN');
+
         const {id: googleId, name: {familyName: lastName, givenName: name}, emails} = profile;
 
-        const data = await getUserByGoogleId(googleId);
+        const data = await userRepository.getUserByGoogleId(googleId, client);
         const user = await data.rows[0];
 
         if (user) {
+            await client.query('COMMIT');
+
             return done(null, user);
         }
 
@@ -70,67 +75,18 @@ export const authenticateByGoogle = async (accessToken, refreshToken, profile, d
             lastName,
         };
 
-        const existingData = await saveUser(newUser);
+        const existingData = await userRepository.saveUser(newUser, client);
         const existingUser = await existingData.rows[0];
 
-        return done(null, existingUser);
-    } catch (error) {
-        return done(error, null);
-    }
-};
-
-export const authenticateByFacebook = async (accessToken, refreshToken, profile, done) => {
-    try {
-        const {id: facebookId, name: {familyName: lastName, givenName: name}, emails} = profile;
-
-        const data = await getUserByFacebookId(facebookId);
-        const user = await data.rows[0];
-
-        if (user) {
-            return done(null, user);
-        }
-
-        const newUser = {
-            facebookId,
-            "googleEmail": emails[0].value,
-            name,
-            lastName,
-        };
-
-        const existingData = await saveUser(newUser);
-        const existingUser = await existingData.rows[0];
+        await client.query('COMMIT');
 
         return done(null, existingUser);
+
     } catch (error) {
+        await client.query('ROLLBACK');
         return done(error, null);
-    }
-};
-
-export const authenticateByVkontakte = async (accessToken, refreshToken, params, profile, done) => {
-    try {
-        const { id: vkontakteId, name: {familyName: lastName, givenName: name} } = profile;
-        const { email: vkontakteEmail } = params;
-
-        const data = await getUserByVkontakteId(vkontakteId);
-        const user = await data.rows[0];
-
-        if (user) {
-            return done(null, user);
-        }
-
-        const newUser = {
-            vkontakteId,
-            vkontakteEmail,
-            name,
-            lastName,
-        };
-
-        const existingData = await saveUser(newUser);
-        const existingUser = await existingData.rows[0];
-
-        return done(null, existingUser);
-    } catch (error) {
-        return done(error, null);
+    } finally {
+        client.release();
     }
 };
 

@@ -13,4 +13,6 @@ router.put('/:id/update', validate(dishValidator.dishUpdating), dishController.u
 
 router.delete('/:id/delete', validate(dishValidator.dishDeleting), dishController.deleteDish);
 
+router.get('/:id', validate(dishValidator.dishGetting), dishController.getDish);
+
 export default router;

@@ -20,3 +20,10 @@ export const deleteDish = (req, res, next) => {
         .then(data => res.status(200).end())
         .catch(e => next(e))
 };
+
+export const getDish = (req, res, next) => {
+    dishService
+        .getDish(req.params.id)
+        .then(data => res.status(200).json(data.rows[0]))
+        .catch(e => next(e))
+};

@@ -30,3 +30,11 @@ export const dishDeleting = {
         id: Joi.number().integer().min(1).required(),
     },
 };
+
+export const dishGetting = {
+    params: {
+        id: Joi.number().integer().min(1).required(),
+    },
+};
+
+

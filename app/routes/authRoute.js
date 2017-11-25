@@ -10,8 +10,6 @@ import * as userController from '../controllers/userControlller';
 
 const router = express.Router();
 const passportGoogle = passport.authenticate('google', {  scope: ['email profile'] });
-const passportFacebook = passport.authenticate('facebook', { scope: ['email profile'] });
-const passportVkontakte = passport.authenticate('vkontakte', { scope: ['email profile'] });
 
 router.post('/signin',  validate(loginValidator), userController.authenticate);
 

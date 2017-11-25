@@ -26,13 +26,13 @@ export const getCategory = async (id) => {
 };
 
 export const updateCategory = async (category, id) => {
-    const client = pool.connect();
+    const client = await pool.connect();
     try {
         await client.query('BEGIN');
 
         const data = await categoryRepository.getCategory(id, client);
-        const category = await data.rows[0];
-        if (!category) {
+        const existingCategory = await data.rows[0];
+        if (!existingCategory) {
             throw new CustomError(`Category with id = ${id} not found`, 204);
         }
         const updatedCategory = await categoryRepository.updateCategory(category, id, client);

@@ -71,8 +71,7 @@ export const authenticateByGoogle = async (accessToken, refreshToken, profile, d
         const newUser = {
             googleId,
             "googleEmail": emails[0].value,
-            name,
-            lastName,
+            "name": `${name} ${lastName}`,
         };
 
         const existingData = await userRepository.saveUser(newUser, client);

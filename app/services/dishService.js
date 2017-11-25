@@ -32,11 +32,11 @@ export const updateDish = async (dish, id) => {
         await client.query('BEGIN');
 
         const data = await getDish(id);
-        const dish = await data.rows[0];
-        if (!dish) {
+        const existingDish = await data.rows[0];
+        if (!existingDish) {
             throw new CustomError(`Dish with id = ${id} not found`, 204);
         }
-        const updatedDish = await dishRepository.updateDish(dish, id);
+        const updatedDish = await dishRepository.updateDish(dish, id, client);
 
         await client.query('COMMIT');
 
@@ -59,7 +59,7 @@ export const deleteDish = async (id) => {
         if (!dish) {
             throw new CustomError(`Dish with id = ${id} not found`, 204);
         }
-        await dishRepository.deleteDish(id);
+        await dishRepository.deleteDish(id, client);
 
         await client.query('COMMIT');
     }

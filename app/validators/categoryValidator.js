@@ -12,7 +12,8 @@ export const categoryUpdating = {
         id: Joi.number().integer().min(1).required(),
     },
     body: {
-        name: Joi.string().required(),
+        name: Joi.string(),
+        parent_id: Joi.number().integer().min(1),
     },
 };
 

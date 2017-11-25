@@ -6,8 +6,8 @@ export const dishCreating = {
         price: Joi.number().required(),
         image: Joi.string().required(),
         description: Joi.string().required(),
-        mass: Joi.string().required(),
-        length: Joi.string().required(),
+        mass: Joi.string(),
+        length: Joi.string(),
     },
 };
 
@@ -16,12 +16,12 @@ export const dishUpdating = {
         id: Joi.number().integer().min(1).required(),
     },
     body: {
-        name: Joi.string().required(),
-        price: Joi.number().required(),
-        image: Joi.string().required(),
-        description: Joi.string().required(),
-        mass: Joi.string().required(),
-        length: Joi.string().required(),
+        name: Joi.string(),
+        price: Joi.number(),
+        image: Joi.string(),
+        description: Joi.string(),
+        mass: Joi.string(),
+        length: Joi.string(),
     },
 };
 

@@ -1,5 +1,5 @@
 import passport from 'passport';
-import {google, facebook, vkontakte} from '../config';
+import {google} from '../config';
 
 import * as userService from '../services/userService';
 

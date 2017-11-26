@@ -22,3 +22,9 @@ export const categoryDeleting = {
         id: Joi.number().integer().min(1).required(),
     },
 };
+
+export const dishesGettingByCategoryId = {
+    params: {
+        categoryId: Joi.number().integer().min(1).required(),
+    },
+};

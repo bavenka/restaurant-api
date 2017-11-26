@@ -11,5 +11,8 @@ export const deleteDish = (id, client) =>
 export const getDish = (id, client) =>
     client.query(selectQuery({id}, TABLE_NAME.DISHES, QUERY_NAME.GET_DISH));
 
+export const getDishesByCategoryId = (categoryId, client) =>
+    client.query(selectQuery({categoryId}, TABLE_NAME.DISHES, QUERY_NAME.GET_DISHES_BY_CATEGORY_ID));
+
 export const updateDish = (dish, id, client) =>
     client.query(updateQuery(dish, id, TABLE_NAME.DISHES));

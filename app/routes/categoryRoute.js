@@ -4,6 +4,7 @@ import validate from 'express-validation';
 import * as categoryValidator from '../validators/categoryValidator';
 
 import * as categoryController from '../controllers/categoryController';
+import * as dishController from '../controllers/dishController';
 
 const router = express.Router();
 
@@ -20,5 +21,7 @@ router.put('/:id/update', validate(categoryValidator.categoryUpdating), category
 router.delete('/:id/delete', validate(categoryValidator.categoryDeleting), categoryController.deleteCategory);
 
 router.get('/:id', categoryController.getCategory);
+
+router.get('/:categoryId/dishes', validate(categoryValidator.dishesGettingByCategoryId), dishController.getDishesByCategoryId);
 
 export default router;

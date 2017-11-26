@@ -27,3 +27,10 @@ export const getDish = (req, res, next) => {
         .then(data => res.status(200).json(data.rows[0]))
         .catch(e => next(e))
 };
+
+export const getDishesByCategoryId = (req, res, next) => {
+    dishService
+        .getDishesByCategoryId(req.params.categoryId)
+        .then(data => res.status(200).json(data))
+        .catch(e => next(e))
+};

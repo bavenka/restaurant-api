@@ -27,3 +27,12 @@ export const getCategory = (req, res, next) => {
         .then(data => res.status(200).json(data.rows[0]))
         .catch(e => next(e))
 };
+
+export const getRootCategories = (req, res, next) => {
+    categoryService
+        .getRootCategories()
+        .then(data => res.status(200).json(data.rows))
+        .catch(e => next(e))
+};
+
+

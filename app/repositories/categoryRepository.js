@@ -13,3 +13,6 @@ export const getCategory = (id, client) =>
 
 export const updateCategory = (category, id, client) =>
     client.query(updateQuery(category, id, TABLE_NAME.CATEGORIES));
+
+export const getRootCategories = (client) =>
+    client.query(selectQuery({"parentId": null}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORY));

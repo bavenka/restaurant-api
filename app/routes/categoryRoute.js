@@ -24,4 +24,6 @@ router.get('/:id', categoryController.getCategory);
 
 router.get('/:categoryId/dishes', validate(categoryValidator.dishesGettingByCategoryId), dishController.getDishesByCategoryId);
 
+router.get('/', categoryController.getRootCategories);
+
 export default router;

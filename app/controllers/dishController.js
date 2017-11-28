@@ -31,6 +31,6 @@ export const getDish = (req, res, next) => {
 export const getDishesByCategoryId = (req, res, next) => {
     dishService
         .getDishesByCategoryId(req.params.categoryId)
-        .then(data => res.status(200).json(data))
+        .then(data => res.status(200).json(data.rows))
         .catch(e => next(e))
 };

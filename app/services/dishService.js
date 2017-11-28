@@ -29,10 +29,7 @@ export const getDish = async (id) => {
 export const getDishesByCategoryId = async (categoryId) => {
     const client = await pool.connect();
     try {
-        const data = await dishRepository.getDishesByCategoryId(categoryId, client);
-
-        const { rows } = await data;
-        return rows.length > 1 ? rows : rows[0];
+        return await dishRepository.getDishesByCategoryId(categoryId, client);
     } catch (e) {
         throw e;
     } finally {

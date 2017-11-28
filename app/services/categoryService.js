@@ -69,3 +69,16 @@ export const deleteCategory = async (id) => {
         client.release();
     }
 };
+
+export const getRootCategories = async () => {
+    const client = await pool.connect();
+    try {
+        return await categoryRepository.getRootCategories(client);
+    } catch (e) {
+        throw e;
+    } finally {
+        client.release();
+    }
+};
+
+

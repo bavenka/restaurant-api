@@ -28,3 +28,9 @@ export const dishesGettingByCategoryId = {
         categoryId: Joi.number().integer().min(1).required(),
     },
 };
+
+export const categoriesGettingByParentId = {
+    params: {
+        parentId: Joi.number().integer().min(1).required(),
+    },
+};

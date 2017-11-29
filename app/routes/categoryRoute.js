@@ -20,7 +20,7 @@ router.put('/:id/update', validate(categoryValidator.categoryUpdating), category
 
 router.delete('/:id/delete', validate(categoryValidator.categoryDeleting), categoryController.deleteCategory);
 
-router.get('/:id', categoryController.getCategory);
+router.get('/:parentId', validate(categoryValidator.categoriesGettingByParentId), categoryController.getCategoriesByParentId);
 
 router.get('/:categoryId/dishes', validate(categoryValidator.dishesGettingByCategoryId), dishController.getDishesByCategoryId);
 

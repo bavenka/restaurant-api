@@ -8,11 +8,11 @@ export const createCategory = (category, client) =>
 export const deleteCategory = (id, client) =>
     client.query(deleteQuery({id}, TABLE_NAME.CATEGORIES));
 
-export const getCategory = (id, client) =>
-    client.query(selectQuery({id}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORY));
+export const getCategoriesByParentId = (parentId, client) =>
+    client.query(selectQuery({parentId}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORIES_BY_PARENT_ID));
 
 export const updateCategory = (category, id, client) =>
     client.query(updateQuery(category, id, TABLE_NAME.CATEGORIES));
 
 export const getRootCategories = (client) =>
-    client.query(selectQuery({"parentId": null}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_CATEGORY));
+    client.query(selectQuery({"parentId": null}, TABLE_NAME.CATEGORIES, QUERY_NAME.GET_ROOT_CATEGORIES));

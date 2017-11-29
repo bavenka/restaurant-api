@@ -14,10 +14,10 @@ export const createCategory = async (category) => {
     }
 };
 
-export const getCategory = async (id) => {
+export const getCategoriesByParentId = async (parentId) => {
     const client = await pool.connect();
     try {
-        return await categoryRepository.getCategory(id, client);
+        return await categoryRepository.getCategoriesByParentId(parentId, client);
     } catch (e) {
         throw e;
     } finally {

@@ -13,7 +13,7 @@ export default (value, tableName, queryName) => {
         queryText = queryText + `"${keys[0]}" = $1`;
         queryValues.push(value[keys[0]]);
     } else {
-        queryValues = Object.keys(value).map((key, index) => {
+        queryValues = keys.map((key, index) => {
             queryArgumentsKeys.push(`"${key}" = $${index + 1}`);
             return `${value[key]}`;
         });

@@ -1,5 +1,6 @@
 export default {
-    USERS: 'users',
-    CATEGORIES: 'categories',
-    DISHES: 'dishes',
+    USER: 'user',
+    CATEGORY: 'category',
+    DISH: 'dish',
+    CART: 'cart',
 }

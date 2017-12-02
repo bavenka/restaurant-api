@@ -8,7 +8,6 @@ export default (value, tableName, queryName) => {
 
     const keys = Object.keys(value);
 
-
     if(keys.length === 1) {
         queryText = queryText + `"${keys[0]}" = $1`;
         queryValues.push(value[keys[0]]);

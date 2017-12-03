@@ -17,8 +17,13 @@ export const cancelUserReservation = (reservationId, client) =>
     client.query(deleteQuery({id: reservationId}, TABLE_NAME.RESERVATION));
 
 export const getUserReservation = (userId, reservationId, client) =>
-    client.query(selectQuery({user_id: userId, id: reservationId}, TABLE_NAME.RESERVATION, QUERY_NAME.GET_USER_RESERVATION));
+    client.query(selectQuery({
+        user_id: userId,
+        id: reservationId
+    }, TABLE_NAME.RESERVATION, QUERY_NAME.GET_USER_RESERVATION));
 
 export const getUserReservations = (userId, client) =>
     client.query(selectQuery({user_id: userId}, TABLE_NAME.RESERVATION, QUERY_NAME.GET_USER_RESERVATIONS));
 
+export const addDishToReservation = (userId, id, dish, client) =>
+    client.query(insertQuery(Object.assign(dish, {user_id: userId, reservation_id: id} ), TABLE_NAME.RESERVATION_DISH));

@@ -24,3 +24,4 @@ export const getDishFromCart = (userId, dishId, client) =>
 
 export const clearCart = (userId, client) =>
     client.query(deleteQuery({user_id: userId}, TABLE_NAME.CART));
+

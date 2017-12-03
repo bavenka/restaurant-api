@@ -4,7 +4,7 @@ import * as reservationRepository from '../repositories/reservationRepository';
 import * as userRepository from '../repositories/userRepository';
 import CustomError from "../errors/custom-error";
 
-export const bookTable = async (userId, details) => {
+export const bookTable = async (userId, details, dishes) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -16,11 +16,28 @@ export const bookTable = async (userId, details) => {
             throw new CustomError(`User with id = ${userId} not found`, 204);
         }
 
-        const data = await reservationRepository.bookTable(userId, details, client);
+        const reservationData = await reservationRepository.bookTable(userId, details, client);
+
+        if(!dishes) {
+            await client.query('COMMIT');
+            return await reservationData.rows[0];
+        }
+
+        const reservation = await reservationData.rows[0];
+
+        let reservationDishes = [];
+
+        await dishes.forEach(async (dish) => {
+            let data = await reservationRepository.addDishToReservation(userId, reservation.id, dish, client);
+            await reservationDishes.push(data)
+        });
 
         await client.query('COMMIT');
 
-        return data;
+        return {
+            reservation,
+            reservationDishes
+        };
 
     } catch (e) {
         await client.query('ROLLBACK');
@@ -79,6 +96,37 @@ export const getUserReservations = async (userId) => {
         await client.query('COMMIT');
 
         return data;
+
+    } catch (e) {
+        await client.query('ROLLBACK');
+        throw e;
+    } finally {
+        client.release();
+    }
+};
+
+export const addDishesToReservation = async (reservationId, userId, dishes) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const userData = await userRepository.getUserById(userId, client);
+
+        const existingUser = await userData.rows[0];
+        if (!existingUser) {
+            throw new CustomError(`User with id = ${userId} not found`, 204);
+        }
+
+        let reservationDishes = [];
+
+        await dishes.forEach(async (dish) => {
+            let data = await reservationRepository.addDishToReservation(dish, client);
+            await reservationDishes.push(data)
+        });
+
+        await client.query('COMMIT');
+
+        return reservationDishes;
 
     } catch (e) {
         await client.query('ROLLBACK');

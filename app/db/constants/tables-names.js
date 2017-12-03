@@ -3,4 +3,5 @@ export default {
     CATEGORY: 'category',
     DISH: 'dish',
     CART: 'cart',
+    RESERVATION: 'reservation',
 }

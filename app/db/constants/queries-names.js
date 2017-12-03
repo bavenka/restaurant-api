@@ -8,4 +8,6 @@ export default {
     GET_DISHES_BY_CATEGORY_ID: 'get_dishes_by_category_id',
     GET_DISHES_FROM_CART: 'get_dishes_from_cart',
     GET_DISH_FROM_CART: 'get_dish_from_cart',
+    GET_USER_RESERVATION: 'get_user_reservation',
+    GET_USER_RESERVATIONS: 'get_user_reservations',
 }

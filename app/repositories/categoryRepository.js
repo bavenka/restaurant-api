@@ -18,4 +18,4 @@ export const getCategory = (id, client) =>
     client.query(selectQuery({id}, TABLE_NAME.CATEGORY));
 
 export const getRootCategories = (client) =>
-    client.query(selectQuery({"parentId": null}, TABLE_NAME.CATEGORY, QUERY_NAME.GET_ROOT_CATEGORIES));
+    client.query(selectQuery({"parent_id": null}, TABLE_NAME.CATEGORY, QUERY_NAME.GET_ROOT_CATEGORIES));

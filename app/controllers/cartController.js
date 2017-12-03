@@ -2,14 +2,14 @@ import * as cartService from '../services/cartService';
 
 export const addDishToCart = (req, res, next) => {
     cartService
-        .addDishToCart(req.params.userId, req.params.dishId)
+        .addDishToCart(req.params.userId, req.params.dishId, req.body)
         .then(data => res.status(201).json(data.rows[0]))
         .catch(e => next(e))
 };
 
 export const deleteDishFromCart = (req, res, next) => {
     cartService
-        .deleteDishFromCart(req.params.dishId, req.params.userId)
+        .deleteDishFromCart(req.params.userId, req.params.dishId)
         .then(data => res.status(200).end())
         .catch(e => next(e))
 };

@@ -7,7 +7,7 @@ import * as dishRepository from '../repositories/dishRepository';
 
 import CustomError from "../errors/custom-error";
 
-export const addDishToCart = async (userId, dishId, details) => {
+export const addOrUpdateDishToCart = async (userId, dishId, details) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');

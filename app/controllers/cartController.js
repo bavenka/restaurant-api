@@ -2,7 +2,7 @@ import * as cartService from '../services/cartService';
 
 export const addDishToCart = (req, res, next) => {
     cartService
-        .addDishToCart(req.params.userId, req.params.dishId, req.body)
+        .addOrUpdateDishToCart(req.params.userId, req.params.dishId, req.body)
         .then(data => res.status(201).json(data.rows[0]))
         .catch(e => next(e))
 };

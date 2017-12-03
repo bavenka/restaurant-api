@@ -46,7 +46,7 @@ export const addOrUpdateDishToCart = async (userId, dishId, details) => {
     }
 };
 
-export const deleteDishFromCart = async (userId, dishId,) => {
+export const deleteDishFromCart = async (userId, dishId) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');

@@ -20,9 +20,3 @@ export const getUserReservations = (req, res, next) => {
         .then(data => res.status(200).json(data.rows))
         .catch(e => next(e))
 };
-
-export const addDishesToReservation =(req, res, next) => {
-    reservationService
-        .addDishesToReservation(req.params)
-
-};

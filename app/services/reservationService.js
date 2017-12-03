@@ -104,34 +104,3 @@ export const getUserReservations = async (userId) => {
         client.release();
     }
 };
-
-export const addDishesToReservation = async (reservationId, userId, dishes) => {
-    const client = await pool.connect();
-    try {
-        await client.query('BEGIN');
-
-        const userData = await userRepository.getUserById(userId, client);
-
-        const existingUser = await userData.rows[0];
-        if (!existingUser) {
-            throw new CustomError(`User with id = ${userId} not found`, 204);
-        }
-
-        let reservationDishes = [];
-
-        await dishes.forEach(async (dish) => {
-            let data = await reservationRepository.addDishToReservation(dish, client);
-            await reservationDishes.push(data)
-        });
-
-        await client.query('COMMIT');
-
-        return reservationDishes;
-
-    } catch (e) {
-        await client.query('ROLLBACK');
-        throw e;
-    } finally {
-        client.release();
-    }
-};

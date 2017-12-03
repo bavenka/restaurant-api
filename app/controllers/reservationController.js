@@ -3,7 +3,7 @@ import * as reservationService from '../services/reservationService';
 export const bookTable = (req, res, next) => {
     reservationService
         .bookTable(req.params.userId, req.body)
-        .then(data => res.status(201).json(data.rows[0]))
+        .then(data => res.status(201).json(data))
         .catch(e => next(e))
 };
 

@@ -66,4 +66,10 @@ CREATE TABLE reservation_dish
   quantity integer not null,
   total numeric not null
 );
+
+CREATE TABLE customer_dish
+(
+  customer_id bigint references customer (id) ON DELETE CASCADE,
+  dish_id bigint references dish (id) ON DELETE CASCADE
+);
 `;

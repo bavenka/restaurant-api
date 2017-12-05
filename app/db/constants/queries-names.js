@@ -10,4 +10,6 @@ export default {
     GET_DISH_FROM_CART: 'get_dish_from_cart',
     GET_USER_RESERVATION: 'get_user_reservation',
     GET_USER_RESERVATIONS: 'get_user_reservations',
+    GET_DISHES_FROM_WISH_LIST: 'get_dishes_from_wish_list',
+    GET_DISH_FROM_WISH_LIST: 'get_dish_from_wish_list',
 }

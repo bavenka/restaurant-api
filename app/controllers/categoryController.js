@@ -21,10 +21,10 @@ export const deleteCategory = (req, res, next) => {
         .catch(e => next(e))
 };
 
-export const getCategory = (req, res, next) => {
+export const getCategoriesByParentId = (req, res, next) => {
     categoryService
-        .getCategory(req.params.id)
-        .then(data => res.status(200).json(data.rows[0]))
+        .getCategoriesByParentId(req.params.parentId)
+        .then(data => res.status(200).json(data.rows))
         .catch(e => next(e))
 };
 

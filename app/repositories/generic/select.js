@@ -1,11 +1,27 @@
 export default (value, tableName, queryName) => {
 
-    const key = Object.keys(value)[0];
-    const queryText = `SELECT * FROM "${ tableName }" WHERE "${key}" = $1`;
+    let queryArgumentsKeys = [];
+
+    let queryValues = [];
+
+    let queryText = `SELECT * FROM "${ tableName }" WHERE `;
+
+    const keys = Object.keys(value);
+
+    if(keys.length === 1) {
+        queryText = queryText + `"${keys[0]}" = $1`;
+        queryValues.push(value[keys[0]]);
+    } else {
+        queryValues = keys.map((key, index) => {
+            queryArgumentsKeys.push(`"${key}" = $${index + 1}`);
+            return `${value[key]}`;
+        });
+        queryText = queryText + `${queryArgumentsKeys.join(' AND ')}`;
+    }
 
     return {
         name: queryName,
         text: queryText,
-        values: [value[key]],
+        values: queryValues,
     };
 };

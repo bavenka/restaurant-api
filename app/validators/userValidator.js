@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export default {
     body: {
-        name: Joi.string().alphanum().required(),
+        name: Joi.string().required(),
         email: Joi.string().email().required(),
         password: Joi.string().required(),
     },

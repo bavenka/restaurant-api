@@ -57,9 +57,9 @@ export const authenticateByGoogle = async (accessToken, refreshToken, profile, d
     try {
         await client.query('BEGIN');
 
-        const {id: googleId, name: {familyName: lastName, givenName: name}, emails} = profile;
+        const {id, name: {familyName: lastName, givenName: name}, emails} = profile;
 
-        const data = await userRepository.getUserByGoogleId(googleId, client);
+        const data = await userRepository.getUserByGoogleId(id, client);
         const user = await data.rows[0];
 
         if (user) {
@@ -69,8 +69,8 @@ export const authenticateByGoogle = async (accessToken, refreshToken, profile, d
         }
 
         const newUser = {
-            googleId,
-            "googleEmail": emails[0].value,
+            "google_id": id,
+            "google_email": emails[0].value,
             "name": `${name} ${lastName}`,
         };
 

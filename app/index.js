@@ -1,11 +1,11 @@
 import express from 'express';
 import passport from 'passport';
+import cors from 'cors';
 
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const sassMiddleware = require('node-sass-middleware');
 
 import users from './routes/userRoute';
@@ -17,7 +17,6 @@ import reservation from './routes/reservationRoute';
 import CustomError from "./errors/custom-error";
 
 const app = express();
-app.use(cors());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -33,6 +32,9 @@ app.use(sassMiddleware({
     sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cors());
+app.options('*', cors());
 
 app.use('/', users, auth);
 app.use('/categories', categories);
